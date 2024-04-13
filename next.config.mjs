@@ -1,16 +1,19 @@
-/**
- * @type {import('next').NextConfig}
- */
+/** @type {import('next').NextConfig} */
 const nextConfig = {
-    reactStrictMode: true,
-    webpack(config) {
-        config.module.rules.push({
-        test: /\.svg$/,
-        use: ["@svgr/webpack"],
-        });
-
-        return config;
+    experimental: {
+      appDir: true,
+      serverComponentsExternalPackages: ["mongoose"],
     },
-}
-
-export default nextConfig;
+    images: {
+      domains: ['lh3.googleusercontent.com'],
+    },
+    webpack(config) {
+      config.experiments = {
+        ...config.experiments,
+        topLevelAwait: true,
+      }
+      return config
+    }
+  }
+  
+  export default nextConfig
