@@ -10,7 +10,7 @@ const Nav = () => {
     const { data: session } = useSession();
     const [toggleDropDown, setToggleDropDown] = useState(false);
 
-    const [providers, setProviders] = useState(null);
+    const [providers, setProviders] = useState<Record<LiteralUnion<BuiltInProviderType, string>, ClientSafeProvider> | null>(null);
     useEffect(() => {
         const setUpProviders = async () => {
             const response = await getProviders();
@@ -44,7 +44,7 @@ const Nav = () => {
                             </Link>
 
                             <Image 
-                                src={session?.user.image}
+                                src={session?.user.image ?? ''}
                                 alt='Promptopia Logo'
                                 width={40} height={40}
                                 className='w-10 h-10 rounded-[50%] cursor-pointer'
@@ -73,20 +73,20 @@ const Nav = () => {
 
                         ) :
                         <>
-                        {providers &&
-                        Object.values(providers).map((provider) => (
-                            <button
-                            type='button'
-                            key={provider.name}
-                            onClick={() => {
-                                signIn(provider.id);
-                            }}
-                            className='black_btn'
-                            >
-                            Sign in
-                            </button>
-                        ))}
-                    </>
+                            {providers &&
+                                Object.values(providers).map((provider: any) => (
+                                    <button
+                                    type='button'
+                                    key={provider.name}
+                                    onClick={() => {
+                                        signIn(provider.id);
+                                    }}
+                                    className='black_btn'
+                                    >
+                                    Sign in
+                                    </button>
+                            ))}
+                        </>
                     }
                 </div>
 
@@ -94,7 +94,7 @@ const Nav = () => {
                     {session?.user ? (
                         <div className='flex'>
                             <Image 
-                                src={session?.user.image}
+                                src={session?.user.image ?? ''}
                                 alt='Promptopia Logo'
                                 width={40} height={40}
                                 className='w-10 h-10 rounded-[50%] cursor-pointer'
@@ -128,7 +128,7 @@ const Nav = () => {
                     ) : (
                         <>
                             {providers &&
-                            Object.values(providers).map((provider) => (
+                            Object.values(providers).map((provider: any) => (
                                 <button
                                 type='button'
                                 key={provider.name}
