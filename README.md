@@ -1,3 +1,8 @@
+## Promptopia
+
+This is a project for practicing Next.js with TypeScript and TailWind
+It is a website for sharing useful AI prompts Or browse Shared prompts from other users
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
