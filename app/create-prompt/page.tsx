@@ -6,6 +6,8 @@ import Form from '@components/Form'
 
 const CreatePrompt = () => {
     const [submitting, setSubmitting] = useState(false);
+    const { data: session } = useSession();
+    const router = useRouter()
     const [post, setPost] = useState({
         prompt: '',
         tag: '',
@@ -14,22 +16,25 @@ const CreatePrompt = () => {
         e.preventDefault();
         setSubmitting(true);
         try {
-            const response = await fetch('/api/create-prompt', {
+            const response = await fetch('/api/prompt/new', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(post),
+                body: JSON.stringify({
+                    prompt: post.prompt,
+                    userId: session?.user.id,
+                    tag: post.tag,
+                }),
             });
-            setSubmitting(false);
             if (response.ok) {
-                const { id } = await response.json();
-                router.push(`/prompt/${id}`);
+                router.push(`/`);
             } else {
                 throw new Error(await response.text());
             }
         } catch (error) {
             console.error('Failed to create prompt:', error);
+        } finally {
             setSubmitting(false);
         }
     }
